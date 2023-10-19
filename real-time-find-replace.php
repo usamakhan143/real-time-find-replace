@@ -34,7 +34,7 @@ if(!class_exists('RealTimeFindReplace')){
         }
 
 
-        public function initialize_rtfr()
+        public function initialize()
 		{
 			include_once(RTFR_PLUGIN_PATH . '/includes/utilities.php');
 			include_once(RTFR_PLUGIN_PATH . '/includes/option-page.php');
@@ -50,4 +50,4 @@ if(!class_exists('RealTimeFindReplace')){
 
 
 $RealTimeFindReplace = new RealTimeFindReplace();
-$RealTimeFindReplace->initialize_rtfr();
+$RealTimeFindReplace->initialize();
