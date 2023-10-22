@@ -1,34 +1,22 @@
 <?php
 
 
-// add_filter( 'gettext', 'showDatas', 10, 3 );
+function real_time_find_replace_rtfr( $buffer ) {
 
-// function showDatas( $translated_text, $untranslated_text, $domain ) {
-//     $trans = get_plugin_options_rtfr('crb_repeater_fields');
-    
-//     // Loop through the trans from the repeater
-//     foreach ( $trans as $tran ) {
-//         if ( $untranslated_text == $tran['find_text'] ) {
-//             return $tran['replace_text'];
-//         }
-//     }
-    
-//     // If no match is found, return the original text
-//     return $translated_text;
-// }
+    $find_replace_fields = get_plugin_options_rtfr('crb_repeater_fields');
 
-// get_plugin_options_rtfr('manjan_plugin_email');
+    if(is_array($find_replace_fields)) {
+        foreach($find_replace_fields as $find_replace_field) {
+            $buffer = str_replace( $find_replace_field['find_text'], $find_replace_field['replace_text'], $buffer );
+        }
+    }
+    return $buffer;
+}
 
-// add_action('init', 'showData');
-// function showData()
-// {
-//     // echo get_s_field('test_field');
-//     $slides = get_plugin_options_rtfr( 'crb_repeater_fields' );
-//     echo '<ul>';
-//     foreach ( $slides as $slide ) {
-//         echo '<li>';
-//         echo '<h2>' . $slide['find_text'] . $slide['replace_text'] . '</h2>';
-//         echo '</li>';
-//     }
-//     echo '</ul>';
-// }
+function rtfr_template_redirect() {
+	ob_start();
+	ob_start( 'real_time_find_replace_rtfr' );
+}
+
+
+add_action( 'template_redirect', 'rtfr_template_redirect' );
